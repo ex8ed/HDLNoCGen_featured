@@ -2,3 +2,5 @@
 bin/
 obj/
 projects/
+
+database/hdl_db.db
