@@ -28,12 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_data_base));
             this.dataGridViewDataBase = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.configuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.algorithm = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,11 +42,19 @@
             this.plls = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ufms = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.adcs = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.toolTipFilter = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDataBase)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewDataBase
             // 
+            this.dataGridViewDataBase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewDataBase.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDataBase.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -69,40 +74,6 @@
             this.dataGridViewDataBase.RowHeadersWidth = 51;
             this.dataGridViewDataBase.Size = new System.Drawing.Size(1035, 476);
             this.dataGridViewDataBase.TabIndex = 0;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(893, 20);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(155, 36);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Все симуляции";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(513, 20);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(155, 36);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Запрос ...";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(13, 34);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(450, 22);
-            this.textBox1.TabIndex = 4;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(140, 16);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Параметры запроса";
             // 
             // id
             // 
@@ -152,6 +123,7 @@
             this.memory_bits.HeaderText = "Количество битов памяти";
             this.memory_bits.MinimumWidth = 6;
             this.memory_bits.Name = "memory_bits";
+            this.memory_bits.Width = 125;
             // 
             // mult_elements
             // 
@@ -180,6 +152,51 @@
             this.adcs.MinimumWidth = 6;
             this.adcs.Name = "adcs";
             this.adcs.Width = 125;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(893, 20);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(155, 36);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Все симуляции";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.fillGrid);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(513, 20);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(155, 36);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "Запрос ...";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.fillWithQuery);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(13, 34);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(450, 22);
+            this.textBox1.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(336, 16);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Параметры запроса: \"ключБД=значение, ...\". (AND)";
+            // 
+            // toolTipFilter
+            // 
+            this.toolTipFilter.AutoPopDelay = 5000;
+            this.toolTipFilter.InitialDelay = 10;
+            this.toolTipFilter.ReshowDelay = 100;
+            this.toolTipFilter.ShowAlways = true;
+            this.toolTipFilter.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTipFilter.ToolTipTitle = "Пары, указываемые в этом поле, объединяются логическим AND!";
             // 
             // Form_data_base
             // 
@@ -219,5 +236,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn plls;
         private System.Windows.Forms.DataGridViewTextBoxColumn ufms;
         private System.Windows.Forms.DataGridViewTextBoxColumn adcs;
+        private System.Windows.Forms.ToolTip toolTipFilter;
     }
 }

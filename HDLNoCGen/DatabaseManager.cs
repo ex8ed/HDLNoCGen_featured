@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Data.SQLite;
+using HDL_NoC_CodeGen;
+using System.Windows.Forms;
 
 namespace HDLNoCGen
 {
@@ -102,9 +104,56 @@ namespace HDLNoCGen
             }
         }
 
-        public void getCustomSimulationsQuery()
+        public DataTable getCustomSimulationsQuery(string filterString)
         {
 
+            var filters = new Dictionary<string, string>();
+
+            var pairs = filterString.Split(',');
+
+            foreach (var pair in pairs)
+            {
+                var parts = pair.Split('=');
+
+                if (parts.Length == 2)
+                { 
+                    filters[parts[0].Trim()] = parts[1].Trim();
+                }
+            }
+
+            using (var command = SqliteConnection.CreateCommand())
+            {
+                StringBuilder query = new StringBuilder("SELECT * FROM simulations");
+
+                if (filters.Count > 0)
+                {
+                    query.Append(" WHERE ");
+
+                    foreach (var filter in filters)
+                    {
+                        query.Append($"{filter.Key} = @{filter.Key} AND ");
+                        command.Parameters.AddWithValue($"@{filter.Key}", filter.Value);
+                    }
+
+                    query.Length -= 5; // cropping "AND" at the end of the query-string
+                }
+
+                command.CommandText = query.ToString();
+                var dataTable = new DataTable();
+                try
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        dataTable.Load(reader);
+                    }
+                } catch (System.Data.SQLite.SQLiteException)
+                {
+                    MessageBox.Show("Ошибка ключа: один из указанных столбцов не существует!",
+                        "Ошибка генерации маршрутов",
+                        System.Windows.Forms.MessageBoxButtons.OK);
+                }
+                return dataTable;
+            }
         }
 
         
