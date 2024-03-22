@@ -17,23 +17,17 @@ namespace HDLNoCGen
             InitializeComponent();
             InitializeDataGridView();
         }
+
         private void InitializeDataGridView()
         {
-            int rowCount = 5;
-            int columnCount = 3;
-
             dataGridViewDataBase.Rows.Clear();
-            Random random = new Random();
+            var databaseManager = new DatabaseManager("C:\\Users\\anpro\\Documents\\HSE\\HLIMDS_HW\\HDLNoCGen_featured\\database\\hdl_db.db");
+            var dataTable = databaseManager.getAllSimulations();
+            Console.WriteLine(dataTable.Rows.Count);
+            dataGridViewDataBase.DataSource = dataTable;
 
-            for (int row = 0; row < rowCount; row++)
-            {
-                dataGridViewDataBase.Rows.Add();
-
-                for (int col = 0; col < columnCount; col++)
-                {
-                    dataGridViewDataBase.Rows[row].Cells[col].Value = random.Next(1, 100);
-                }
-            }
         }
+
+
     }
 }
